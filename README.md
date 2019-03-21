@@ -20,6 +20,7 @@ This fork of original [matheuss/google-translate-api](https://github.com/matheus
 - Fixed extraction of TKK ceed from current `https://translate.google.com` sources (via [@vitalets/google-translate-token](https://github.com/vitalets/google-translate-token))
 - Removed unsecure `unsafe-eval` dependency (See [#2](https://github.com/vitalets/google-translate-api/pull/2))
 - Added [ddaily CI tests](https://travis-ci.org/vitalets/google-translate-api/builds) to get notified if Google API changes
+- Added support for custom `tld` (especially to support `translate.google.cn`, see [#7](https://github.com/vitalets/google-translate-api/pull/7))
 
 ## Install 
 
@@ -117,6 +118,12 @@ Type: `string` Default: `"t"`
 
 Query parameter `client` used in API calls. Can be `t|gtx`.
 
+##### tld
+
+Type: `string` Default: `"com"`
+
+TLD for Google translate host to be used in API calls: `https://translate.google.{tld}`.
+
 ### Returns an `object`:
 
 - `text` *(string)* – The translated text.
@@ -127,7 +134,7 @@ Query parameter `client` used in API calls. Can be `t|gtx`.
   - `text` *(object)*
     - `autoCorrected` *(boolean)* – `true` if the API has auto corrected the `text`
     - `value` *(string)* – The auto corrected `text` or the `text` with suggested corrections
-    - `didYouMean` *(booelan)* – `true` if the API has suggested corrections to the `text`
+    - `didYouMean` *(boolean)* – `true` if the API has suggested corrections to the `text`
 - `raw` *(string)* - If `options.raw` is true, the raw response from Google Translate servers. Otherwise, `''`.
 
 Note that `res.from.text` will only be returned if `from.text.autoCorrected` or `from.text.didYouMean` equals to `true`. In this case, it will have the corrections delimited with brackets (`[ ]`):
